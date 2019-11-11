@@ -1,0 +1,10 @@
+
+<% if @current_user %>
+  <% if @post.favorited_by?(@current_user) %>
+    <p><span class="fa fa-heart like-btn-like"></span><%=link_to @post.favorites.count, post_favorites_path(@post.id), method: :delete, remote: true %></p>
+  <% else %>
+    <p><span class="fa fa-heart like-btn-unlike"></span><%=link_to @post.favorites.count, post_favorites_path(@post.id), method: :post, remote: true %></p>
+  <% end %>
+<% else %>
+  <p><span class="fa fa-heart"></span><%= @post.favorites.count %></p>
+<% end %>

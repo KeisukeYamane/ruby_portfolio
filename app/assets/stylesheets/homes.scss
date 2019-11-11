@@ -1,0 +1,21 @@
+// Place all the styles related to the homes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+  text-align:center;
+  background:#dfdfdf;
+}
+h1{
+  text-transform:uppercase;
+  font-size:72px;
+  font-family:'Verdana';
+  padding:30px;
+}
+
+.img {
+  background-image: url("/assets/fashion.jpg");
+  width: 100%;
+  height: 1000px;
+  background-size: cover;
+  background-position: center;
+}

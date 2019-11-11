@@ -1,0 +1,19 @@
+<div class="">
+  <div class="">
+    <div class="">ログイン</div>
+    <div class="">
+      <div class="">
+        <% if @error_message %>
+        <div class=""><%= @error_message %></div>
+        <% end %>
+        <%= form_for(:users, url: login_path) do |f| %>
+        <p>メールアドレス</p>
+        <%= f.text_field :email, placeholder: 'メールアドレスを入力してください' %>
+        <p>パスワード</p>
+        <%= f.password_field :password, placeholder: 'パスワードを入力してください' %>
+        <%= f.submit 'ログインする' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="">
+  <div class="">
+    <div class="">ユーザーの編集</div>
+    <%= form_for(@user, url: user_path(@user), html: {multipart: true, method: :patch}) do |f| %>
+    <div class="">
+      <div class="">
+        <% @user.errors.full_messages.each do |message|%>
+        <div class=""><%= message %></div>
+        <% end %>
+        <p>ユーザー名</p>
+        <%= f.text_field :name %>
+        <p>メールアドレス</p>
+        <%= f.text_field :email %>
+        <p>パスワード</p>
+        <%= f.password_field :password %>
+        <p>パスワード再入力</p>
+          <%= f.password_field :password_confirmation%>
+        <p>プロフィール画像</p>
+        <!-- <input type="file" name="image" value=""> -->
+        <%= file_field_tag :upfile %>
+        <%= f.submit '編集する' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

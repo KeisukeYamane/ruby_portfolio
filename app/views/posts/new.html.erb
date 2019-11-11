@@ -1,0 +1,18 @@
+<div class="">
+  <div class="">
+    <h1>新規投稿</h1>
+    <%= form_for(@post, url: posts_create_path, html: {multipart: true}) do |f| %>
+    <div class="">
+      <div class="">
+        <% @post.errors.full_messages.each do |message| %>
+        <div class=""><%= message %></div>
+        <% end %>
+        <%= f.text_field :title, placeholder: 'タイトルを入力してください' %>
+        <%= f.text_area :content, placeholder: '本文を入力してください' %>
+        <%= file_field_tag :upfile %>
+        <%= f.submit '投稿する' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

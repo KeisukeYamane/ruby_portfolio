@@ -1,0 +1,18 @@
+ja:
+  activerecord:
+    models:
+      post: 投稿
+      user: ユーザー
+    attributes:
+      post:
+        title: タイトル
+        content: 投稿内容
+        post_image: 投稿する画像
+      user:
+        id: ID
+        name: ユーザー名
+        email: メールアドレス
+        password: パスワード
+        created_at: 作成日
+        updated_at: 更新日
+        password_confirmation: 再入力されたパスワード

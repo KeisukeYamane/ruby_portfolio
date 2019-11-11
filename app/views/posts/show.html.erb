@@ -1,0 +1,30 @@
+<div class="">
+  <div class="">
+    <div class="">
+      <div class="">
+        <%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%>
+        <%= link_to "#{@user.name}", user_path(@user) %>
+      </div>
+      <div class="">
+        <%= image_tag "/post_image/#{@post.post_image}",  :size =>'100x100'%>
+      </div>
+      <p><%= @post.title %></p>
+      <% unless allow_new_line(generate_url(h(@post.content))).try(:html_safe).nil? %>
+        <p><%= allow_new_line(generate_url(h(@post.content))).html_safe %></p>
+      <% else %>
+        <p><%= @post.content %></p>
+      <% end %>
+
+      <% if !@current_user.nil? %>
+        <% if @post.user_id == @current_user.id || @current_user.admin? %>
+          <%= link_to "編集", edit_post_path(@post.id)%>
+          <%= link_to "削除", destroy_post_path(@post.id), method: :delete %>
+        <% end %>
+      <% end %>
+      <div id="likes_buttons_<%= @post.id %>">
+        <%= render partial: 'favorites/favorite', locals: {post: @post} %>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- kokomade -->

@@ -1,0 +1,44 @@
+<div class="">
+  <div class="">
+    <div class="">
+      <%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%>
+      <h2><%= @user.name %></h2>
+      <p><%= @user.email %></p>
+      <% if !@current_user.nil? %>
+        <% if @current_user.id == @user.id || @current_user.admin? %>
+        <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
+        <%= link_to "アカウントを削除する", user_path(@user.id), method: :delete, data: { confirm: '本当にアカウントを削除しますか？投稿内容など完全に消去されます' }%>
+        <% end %>
+      <% end %>
+    </div>
+    <% @user.posts.reverse_each do |post| %>
+    <div class="">
+      <div class="">
+        <img src="<%= "/user_image/#{post.user.image}"%>" alt="">
+      </div>
+      <div class="">
+        <div class="">
+          <%= link_to post.user.name, user_path(post.user.id) %>
+        </div>
+        <%= link_to post.title, post_path(post.id) %>
+      </div>
+    </div>
+    <% end %>
+
+    <% if !@current_user.nil? %>
+      <% if @current_user.id == @user.id %>
+      <p>----- あなたがお気に入りにした投稿 -----</p>
+      <% elsif @current_user.id != @user.id %>
+      <p>----- <%= "#{@user.name}" %>がお気入りした投稿 -----</p>
+      <% end %>
+    <% else %>
+    <p>----- <%= "#{@user.name}" %>がお気入りした投稿 -----</p>
+    <% end %>
+
+    <% @favorite_posts.each do |favorite_posts| %>
+      <%= image_tag "/user_image/#{favorite_posts.user.image}", :size =>'100x100'%>
+      <p><%= favorite_posts.user.name %></p>
+      <p><%= link_to favorite_posts.title, posts_path(favorite_posts.id) %></p>
+    <% end %>
+  </div>
+</div>

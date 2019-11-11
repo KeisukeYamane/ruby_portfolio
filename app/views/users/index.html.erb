@@ -1,0 +1,17 @@
+<div class="">
+  <div class="">
+    <h1>ユーザー一覧</h1>
+    <% @user.each do |user|%>
+    <% unless user.name == '管理者' %>
+    <div class="container">
+      <div class="left">
+        <%= image_tag "/user_image/#{user.image}", :size =>'100x100'%>
+      </div>
+      <div class="right">
+        <%= link_to user.name, user_path(user.id) %>
+      </div>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
+</div>

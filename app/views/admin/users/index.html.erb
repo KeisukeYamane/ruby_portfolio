@@ -1,0 +1,24 @@
+<% @admin_post.each do |admin_post|%>
+<div class="">
+  <div class="">
+    <img src="<%= "/user_image/#{admin_post.user.image}"%>">
+  </div>
+  <div class="">
+    <div class="">
+      <%= admin_post.user.name %>
+    </div>
+    <div class="">
+      <%= admin_post.title %>
+    </div>
+    <div class="">
+      <%= admin_post.content %>
+    </div>
+    <% if !@current_user.nil? %>
+      <% if @current_user.admin? %>
+        <%= link_to "編集", edit_post_path(admin_post.id) %>
+        <%= link_to "削除", destroy_post_path(admin_post.id), method: :delete %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,19 @@
+<div class="">
+  <div class="">
+    <% @post.each do |post|%>
+    <div class="">
+      <div class="">
+        <img src="<%= "/user_image/#{post.image}" %>">
+      </div>
+      <div class="">
+        <div class="">
+          <%= link_to @user.name, "/users/#{@user.id}"%>
+        </div>
+        <%= link_to post.title, post_path(post.id) %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- ここまで -->

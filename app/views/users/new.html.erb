@@ -1,0 +1,23 @@
+<div class="">
+  <div class="">
+    <div class="">新規ユーザー登録</div>
+    <%= form_for @user do |f| %>
+    <div class="">
+      <div class="">
+        <% @user.errors.full_messages.each do |message| %>
+        <div class=""><%= message %></div>
+        <% end %>
+        <p>ユーザー名</p>
+        <%= f.text_field :name, placeholder: '名前を入力してください' %>
+        <p>メールアドレス</p>
+        <%= f.text_field :email, placeholder: 'メールアドレスを入力してください' %>
+        <p>パスワード</p>
+        <%= f.password_field :password, placeholder: 'パスワードを入力してください' %>
+        <p>パスワード再入力</p>
+          <%= f.password_field :password_confirmation, placeholder: 'パスワードを再入力してください' %>
+        <%= f.submit '作成する' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
