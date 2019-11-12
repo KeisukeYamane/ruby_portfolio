@@ -32,7 +32,7 @@ gem 'bcrypt', '~> 3.1.13'
 
 gem 'jquery-rails'
 gem 'rails-ujs'
-gem 'bootstrap', '~> 4.1.1'
+gem "bootstrap", "4.3.1"
 gem 'pry-byebug'
 
 # Use Capistrano for deployment
