@@ -6,9 +6,8 @@ class PostsController < ApplicationController
     @current_page = params[:page].nil? ? 1 : params[:page].to_i
     # @posts = Post.all.order(created_at: :desc)
     @max_page = (Post.all.size.to_f / 3).ceil
-    @current_page = @max_page if @current_page >= @max_page
+    @current_page = @max_page if @current_page > @max_page
     @posts = Post.all.order(created_at: :desc).limit(3).offset(3 * (@current_page -1))
-
     @pagenation = {}
     @pagenation['<<'] = 1 if @max_page >= 5 && @current_page >= 4
     if @max_page >= 4 && @current_page >= 3
