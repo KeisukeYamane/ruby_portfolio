@@ -3,43 +3,47 @@ class PostsController < ApplicationController
   before_action :limitation_corrct_user, only: [:edit, :update, :destroy]
 
   def index
-    @current_page = params[:page].nil? ? 1 : params[:page].to_i
-    # @posts = Post.all.order(created_at: :desc)
-    @max_page = (Post.all.size.to_f / 3).ceil
-    @current_page = @max_page if @current_page > @max_page
-    @posts = Post.all.order(created_at: :desc).limit(3).offset(3 * (@current_page -1))
-    @pagenation = {}
-    @pagenation['<<'] = 1 if @max_page >= 5 && @current_page >= 4
-    if @max_page >= 4 && @current_page >= 3
-      if @current_page == @max_page
-        @pagenation['<'] = @current_page - 3
-      else
-        @pagenation['<'] = @current_page - 2
+      @current_page = params[:page].nil? ? 1 : params[:page].to_i
+      # @posts = Post.all.order(created_at: :desc)
+      @max_page = (Post.all.size.to_f / 3).ceil
+      if @max_page == 0
+        @current_page = 1
+      elsif @current_page > @max_page && @max_page != 0
+        @current_page = @max_page
       end
-    end
+      @posts = Post.all.order(created_at: :desc).limit(3).offset(3 * (@current_page -1))
+      @pagenation = {}
+      @pagenation['<<'] = 1 if @max_page >= 5 && @current_page >= 4
+      if @max_page >= 4 && @current_page >= 3
+        if @current_page == @max_page
+          @pagenation['<'] = @current_page - 3
+        else
+          @pagenation['<'] = @current_page - 2
+        end
+      end
 
-    if @max_page >= 0 && @max_page == @current_page
-      @pagenation.merge!({@current_page - 2 => @current_page - 2, @current_page - 1 => @current_page - 1, @current_page => @current_page})
-    else
-      @pagenation.merge!({@current_page - 1 => @current_page - 1, @current_page => @current_page })
-    end
+      if @max_page >= 0 && @max_page == @current_page
+        @pagenation.merge!({@current_page - 2 => @current_page - 2, @current_page - 1 => @current_page - 1, @current_page => @current_page})
+      else
+        @pagenation.merge!({@current_page - 1 => @current_page - 1, @current_page => @current_page })
+      end
 
-    delete_list = [0, -1]
-    @pagenation.delete_if do |key, value|
-      delete_list.include?(value)
-    end
+      delete_list = [0, -1]
+      @pagenation.delete_if do |key, value|
+        delete_list.include?(value)
+      end
 
-    if @current_page == 1 && @max_page >= 3
-      @pagenation.merge!({@current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2 })
-    elsif (@current_page == 1 && @max_page == 2) || (@current_page != 1 && @max_page != @current_page)
-      @pagenation.merge!({@current_page + 1 => @current_page + 1 })
-    end
-    if @max_page >= 4 && @current_page == 1
-      @pagenation['>'] = @current_page + 3
-    elsif (@max_page >= 4 && @current_page != 1 && @max_page - @current_page >= 2)
-      @pagenation['>'] = @current_page + 2
-    end
-    @pagenation['>>'] = @max_page if @max_page >= 5 && @max_page - @current_page >= 3
+      if @current_page == 1 && @max_page >= 3
+        @pagenation.merge!({@current_page + 1 => @current_page + 1, @current_page + 2 => @current_page + 2 })
+      elsif (@current_page == 1 && @max_page == 2) || (@current_page != 1 && @max_page != @current_page)
+        @pagenation.merge!({@current_page + 1 => @current_page + 1 })
+      end
+      if @max_page >= 4 && @current_page == 1
+        @pagenation['>'] = @current_page + 3
+      elsif (@max_page >= 4 && @current_page != 1 && @max_page - @current_page >= 2)
+        @pagenation['>'] = @current_page + 2
+      end
+      @pagenation['>>'] = @max_page if @max_page >= 5 && @max_page - @current_page >= 3
 
     respond_to do |format|
       format.html
