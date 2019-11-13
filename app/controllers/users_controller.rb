@@ -27,7 +27,6 @@ class UsersController < ApplicationController
       # image: 'default.png',
       user_params
     )
-
     @user.image = 'default.png'
 
     if @user.save
@@ -40,12 +39,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    unless params[:id].to_i == 1
       @user = User.find(params[:id])
       @favorite_posts = @user.favorite_posts
-    else
-      redirect_to posts_page_index_url(@current_page)
-    end
+
   end
 
   def edit
@@ -96,8 +92,8 @@ class UsersController < ApplicationController
     )
 
     if @user && @user.authenticate(password_params[:password])
-      flash[:notice] = "ログイン完了しました"
       session[:user_id] = @user.id
+      flash[:notice] = "ログイン完了しました"
       redirect_to posts_page_index_url(@current_page)
     else
       @error_message = "メールアドレスまたは、パスワードが間違っています"
