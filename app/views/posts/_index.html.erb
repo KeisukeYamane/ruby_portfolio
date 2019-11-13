@@ -11,7 +11,9 @@
   </div>
 </div>
 <% end %>
+<% unless @max_page <= 0 %>
   <% @pagenation.each do |key, value| %>
     <%= link_to key, posts_page_index_path(value), remote: true %>
+<% end %>
   <% end %>
 
