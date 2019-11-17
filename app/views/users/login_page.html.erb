@@ -1,19 +1,22 @@
-<div class="">
-  <div class="">
-    <div class="">ログイン</div>
-    <div class="">
-      <div class="">
-        <% if @error_message %>
-        <div class=""><%= @error_message %></div>
-        <% end %>
-        <%= form_for(:users, url: login_path) do |f| %>
-        <p>メールアドレス</p>
-        <%= f.text_field :email, placeholder: 'メールアドレスを入力してください' %>
-        <p>パスワード</p>
-        <%= f.password_field :password, placeholder: 'パスワードを入力してください' %>
-        <%= f.submit 'ログインする' %>
+<div class="all-div container　no-gutters">
+  <div class="row">
+    <div class="left-div col-lg-6">
+      <h2 class="h2tag">ログイン</h2>
+      <% if @error_message %>
+      <div class=""><%= @error_message %></div>
+      <% end %>
+      <%= form_for(:users, url: login_path) do |f| %>
+      <div class="email-div">
+        <%= f.text_field :email, placeholder: 'メールアドレス' %>
+      </div>
+      <div class="password-div">
+        <%= f.password_field :password, placeholder: 'パスワード' %>
+      </div>
+      <div class="submit-div">
+        <%= f.submit 'ログイン'%>
         <% end %>
       </div>
     </div>
+    <div class="right-div col-lg-6"></div>  
   </div>
 </div>

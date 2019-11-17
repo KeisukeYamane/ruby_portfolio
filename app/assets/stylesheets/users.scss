@@ -1,3 +1,57 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.no-gutters {
+  margin:0;
+  padding:0;
+}
+ 
+.no-gutters　> .col,
+.no-gutters　> [class*="col-"] {
+  margin:0;
+  padding:0;
+}
+
+.row {
+  height: 600px;
+}
+
+input[type="text"], input[type="password"], input[type="submit"]{
+  width: 380px;
+  height: 40px;
+  padding: 0 13px;
+  border: none;
+}
+
+input[type="submit"] {
+  background-color: black;
+  color: white;
+}
+
+.email-div {
+  margin-bottom: 20px;
+}
+
+.submit-div {
+  margin-top: 100px;
+}
+
+.h2tag {
+  padding-bottom: 45px;
+  padding-top: 100px;
+}
+
+.left-div, .right-div {
+  padding: 0 !important;
+}
+
+.left-div {
+  background-color: rgb(231,231,231);
+}
+
+.right-div {
+  background-image: url("/assets/glass.jpg");
+  background-size: cover;
+  background-position-y: -260px;
+}
