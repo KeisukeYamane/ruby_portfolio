@@ -1,23 +1,28 @@
-<div class="">
-  <div class="">
-    <div class="">新規ユーザー登録</div>
-    <%= form_for @user do |f| %>
-    <div class="">
-      <div class="">
-        <% @user.errors.full_messages.each do |message| %>
-        <div class=""><%= message %></div>
+<div class="all-div container　no-gutters">
+  <div class="row">
+    <div class="new-right-div col-lg-6"></div>
+    <div class="new-left-div col-lg-6">
+      <h2 class="h2tag-new">新規登録</h2>
+      <%= form_for @user do |f| %>
+      <% @user.errors.full_messages.each do |message| %>
+      <div class="">・<%= message %></div>
+      <% end %>
+      <div class="name-div">
+        <%= f.text_field :name, placeholder: '名前' %>
+      </div>
+      <div class="email-div">
+        <%= f.text_field :email, placeholder: 'メールアドレス' %>
+      </div>
+      <div class="password-div">
+        <%= f.password_field :password, placeholder: 'パスワード' %>
+      </div>
+      <div class="re-password-div">
+        <%= f.password_field :password_confirmation, placeholder: 'パスワード再入力' %>
+      </div>
+      <div class="submit-div">
+        <%= f.submit '作成' %>
         <% end %>
-        <p>ユーザー名</p>
-        <%= f.text_field :name, placeholder: '名前を入力してください' %>
-        <p>メールアドレス</p>
-        <%= f.text_field :email, placeholder: 'メールアドレスを入力してください' %>
-        <p>パスワード</p>
-        <%= f.password_field :password, placeholder: 'パスワードを入力してください' %>
-        <p>パスワード再入力</p>
-          <%= f.password_field :password_confirmation, placeholder: 'パスワードを再入力してください' %>
-        <%= f.submit '作成する' %>
       </div>
     </div>
-    <% end %>
   </div>
 </div>

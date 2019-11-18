@@ -3,7 +3,7 @@
     <div class="left-div col-lg-6">
       <h2 class="h2tag">ログイン</h2>
       <% if @error_message %>
-      <div class=""><%= @error_message %></div>
+      <div class="">・<%= @error_message %></div>
       <% end %>
       <%= form_for(:users, url: login_path) do |f| %>
       <div class="email-div">
