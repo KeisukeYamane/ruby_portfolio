@@ -13,11 +13,6 @@ Rails.application.routes.draw do
   get 'login' => 'users#login_page'
   post 'login' => 'users#login'
   post 'logout' => 'users#logout'
-
-  # get 'admin/users/index' => 'admin/users#index'
-  # get 'admin/users/:id/edit' => 'admin/users#edit', as: :admin_edit_post
-  # patch 'admin/users/:id' => 'admin/users#update', as: :admin_post
-  # post 'admin/users/:id/destroy' => 'admin/users#destroy', as: :admin_destroy_post
   get 'notice' => 'admin/users#index'
 
   resources :posts do

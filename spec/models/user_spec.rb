@@ -45,7 +45,13 @@ RSpec.describe User, type: :model do
     expect(user.errors[:email]).to include("はすでに存在します")
   end
 
-  # メールアドレスがが正規表現から反して入れば、無効な状態であること
+  #userはpostsを複数持てること
+  it "can have many posts" do
+    user = FactoryBot.create(:user, :many_posts_with_user)
+    expect(user.posts.length).to eq(5)
+  end
+
+  # メールアドレスがが正規表現から反していれば、無効な状態であること
   describe "email is invalid" do
     #　@マークを有していない
     it "when a email don't have @" do

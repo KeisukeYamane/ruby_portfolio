@@ -54,8 +54,6 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    #user_idと関係のある、レコードを@userで取得
-    #@user = User.find(@post.user_id)
     @user = @post.user
   end
 
@@ -81,7 +79,7 @@ class PostsController < ApplicationController
       if @current_user.admin?
         redirect_to notice_url
       else
-        redirect_to posts_page_index_url(@current_page)
+        redirect_to posts_page_index_url(1)
       end
     else
       render :new
