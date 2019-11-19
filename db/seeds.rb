@@ -6,14 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Post.create(title: '今日はいい天気', content: '本当にいい天気', user_id: 1, post_image: '3_chare.jpeg')
-Post.create(title: '今日はgoodな天気', content: '本当にgoodな天気', user_id: 1, post_image: '3_chare.jpeg')
-Post.create(title: '今日は悪い天気', content: '本当に悪い天気', user_id: 2, post_image: '3_chare.jpeg')
-Post.create(title: '今日はbad天気', content: '本当にbad天気', user_id: 2, post_image: '3_chare.jpeg')
-Post.create(title: '今日はbetterな天気', content: '本当にbetterな天気', user_id: 3, post_image: '3_chare.jpeg')
-Post.create(title: '今日は眠たい天気', content: '本当に眠たい天気', user_id: 4, post_image: '3_chare.jpeg')
-Post.create(title: '今日は朝顔な天気', content: '本当に朝顔な天気', user_id: 5, post_image: '3_chare.jpeg')
-Post.create(title: '今日はbな天気', content: '本当にbな天気', user_id: 4, post_image: '3_chare.jpeg')
 
 
 User.create(name: '管理者', email: 'admin@gmail.com', password: '1111', image: 'default.png', admin: true)
@@ -27,3 +19,12 @@ User.create(name: 'tamaki', email: 'tamaki@gmail.com', password: '1111', image: 
 User.create(name: 'tamaki', email: 'tamaka@gmail.com', password: '1111', image: 'image_7.png')
 User.create(name: 'tamaki', email: 'tamakb@gmail.com', password: '1111', image: 'image_7.png')
 User.create(name: 'tamaki', email: 'tamakc@gmail.com', password: '1111', image: 'image_7.png')
+
+Post.create(title: '今日はいい天気', content: '本当にいい天気', user_id: 1, post_image: '3_chare.jpeg')
+Post.create(title: '今日はgoodな天気', content: '本当にgoodな天気', user_id: 1, post_image: '3_chare.jpeg')
+Post.create(title: '今日は悪い天気', content: '本当に悪い天気', user_id: 2, post_image: '3_chare.jpeg')
+Post.create(title: '今日はbad天気', content: '本当にbad天気', user_id: 2, post_image: '3_chare.jpeg')
+Post.create(title: '今日はbetterな天気', content: '本当にbetterな天気', user_id: 3, post_image: '3_chare.jpeg')
+Post.create(title: '今日は眠たい天気', content: '本当に眠たい天気', user_id: 4, post_image: '3_chare.jpeg')
+Post.create(title: '今日は朝顔な天気', content: '本当に朝顔な天気', user_id: 5, post_image: '3_chare.jpeg')
+Post.create(title: '今日はbな天気', content: '本当にbな天気', user_id: 4, post_image: '3_chare.jpeg')
