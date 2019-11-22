@@ -68,13 +68,14 @@ class PostsController < ApplicationController
       # post_image: params[:upfile]
       #ここで紐付けを行う。
       post_params
-    )
-    @post.user_id = @current_user.id
-      upload_image #下で定義されている画像アップロード処理に移る
-    # @post.save
-    # これでデータベースに投稿内容が保存される
-    # そしてリダイレクト処理を行う
-    if @post.save
+      )
+      @post.user_id = @current_user.id
+      #下で定義されている画像アップロード処理に移る
+      upload_image 
+      # @post.save
+      # これでデータベースに投稿内容が保存される
+      # そしてリダイレクト処理を行う
+      if @post.save
       flash[:notice] = '投稿に成功しました'
       if @current_user.admin?
         redirect_to notice_url

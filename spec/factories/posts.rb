@@ -5,4 +5,9 @@ FactoryBot.define do
     post_image "test.jpeg"
     association :user
   end
+
+  trait :empty do
+    user_id nil
+    post_image nil
+  end
 end

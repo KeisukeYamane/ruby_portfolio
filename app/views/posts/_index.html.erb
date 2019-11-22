@@ -1,19 +1,36 @@
-<% @posts.each do |post|%>
-<div class="">
-  <div class="">
-    <img src="<%= "/user_image/#{post.user.image}"%>">
-  </div>
-  <div class="">
-    <div class="">
-      <%= link_to post.user.name, "/users/#{post.user.id}"%>
+<div class="container container-div">
+  <div class="row">
+    <% @posts.each do |post|%>
+    <div class="col-lg-4">
+      <div class="surround-div">
+        <div class="inner-div">
+          <div class="post-image-div">
+            <%= image_tag "/post_image/#{post.post_image}",class: "i"%>
+          </div>
+          <div class="post-userimage-name-div text-left">
+            <%= image_tag "/user_image/#{post.user.image}",  :size =>'50x50', class: "image_tag"%>
+            <%= link_to post.user.name, "/users/#{post.user.id}"%>
+          </div>
+          <div class="post-title-create-div">
+            <%= link_to post.title, post_path(post.id) %>
+            <div class="post-create-div text-right">
+              <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <%= link_to post.title, post_path(post.id) %>
+    <% end %>
   </div>
 </div>
-<% end %>
-<% unless @max_page <= 0 %>
-  <% @pagenation.each do |key, value| %>
-    <%= link_to key, posts_page_index_path(value), remote: true %>
-<% end %>
+<div class="pagenation">
+  <% unless @max_page <= 0 %>
+  <ul class="list-inline page-ul">
+    <% @pagenation.each do |key, value| %>
+    <li class="list-inline-item page-item<%= ' active' if value == @current_page %>">
+      <%= link_to key, posts_page_index_path(value), class: "page-letters"%>
+    </li>
+    <% end %>
+  </ul>
   <% end %>
-
+</div>

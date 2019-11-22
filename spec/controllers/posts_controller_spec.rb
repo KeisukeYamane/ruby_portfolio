@@ -72,14 +72,18 @@ RSpec.describe PostsController, type: :controller do
     context "as an authenticated user" do
       before do
         @user = FactoryBot.create(:user)
+        @post = FactoryBot.attributes_for(:post, :empty)
         session[:user_id] = @user.id
+        @current_user = User.find(session[:user_id]) if session[:user_id]
+        # @post.user_id = @current_user.id
       end
+      
       #session[:user_id]があれば投稿できること
-      # it "adds a post" do
-      #   post_params = FactoryBot.attributes_for(:post)
-      #   expect(
-      #     post :create, params: {post: post_params} ).to change(@user.posts, :count).by(1)
-      #   end
+      it "adds a post" do
+        # binding.pry
+        expect(
+          post :create, params: {post: @post}).to change(@user.posts, :count).by(1)
+        end
       end
       
       context "as a guest" do
@@ -98,3 +102,4 @@ RSpec.describe PostsController, type: :controller do
       end
     end
   end
+  
