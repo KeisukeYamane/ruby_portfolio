@@ -1,42 +1,103 @@
-<div class="">
-  <div class="">
-    <div class="">
-      <%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%>
-      <h2><%= @user.name %></h2>
-      <p><%= @user.email %></p>
-      <% if !@current_user.nil? %>
-        <% if @current_user.id == @user.id || @current_user.admin? %>
-        <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
-        <%= link_to "アカウントを削除する", user_path(@user.id), method: :delete, data: { confirm: '本当にアカウントを削除しますか？投稿内容など完全に消去されます' }%>
-        <% end %>
-      <% end %>
-    </div>
-    <% @user.posts.reverse_each do |post| %>
-    <div class="">
-      <div class="">
-        <img src="<%= "/user_image/#{post.user.image}"%>" alt="">
-      </div>
-      <div class="">
-        <div class="">
-          <%= link_to post.user.name, user_path(post.user.id) %>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a href="#post_tab_link" class="nav-link active" data-toggle="tab">投稿</a>
+  </li>
+  <li class="nav-item">
+    <a href="#favorite_tab_link" class="nav-link" data-toggle="tab">お気に入り</a>
+  </li>
+  <% if !@current_user.nil? %>
+  <% if @current_user.id == @user.id || @current_user.admin? %>
+  <li class="nav-item">
+    <a href="#setting_delete_tab_link" class="nav-link" data-toggle="tab">設定/削除</a>
+  </li>
+  <% end %>
+  <% end %>
+</ul>
+<div class="tab-content">
+  <div id="post_tab_link" class="tab-pane active">
+    <%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%>
+    <h2><%= @user.name %></h2>
+    <p><%= @user.email %></p>
+    <div class="container container-div">
+      <div class="row">
+        <% @user.posts.reverse_each do |post| %>
+        <div class="col-lg-4">
+          <div class="surround-div">
+            <div class="inner-div">
+              <div class="post-image-div">
+                <%= link_to image_tag("/post_image/#{post.post_image}",class: "i"),post_path(post.id) %>
+              </div>
+              <div class="post-userimage-name-div text-left">
+                <%= link_to image_tag("/user_image/#{post.user.image}",  :size =>'50x50', class: "image_tag"), "/users/#{post.user.id}" %>
+                <%= link_to post.user.name, user_path(post.user.id) %>
+              </div>
+              <div class="post-title-create-div">
+                <%= link_to post.title, post_path(post.id) %>
+                <div class="post-create-div text-right">
+                  <%= post.created_at.strftime("%Y-%m-%d %H:%M") %>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <%= link_to post.title, post_path(post.id) %>
+        <% end %>
       </div>
     </div>
-    <% end %>
+  </div>
+  <div id="favorite_tab_link" class="tab-pane">
     <% if !@current_user.nil? %>
-      <% if @current_user.id == @user.id %>
-      <p>----- あなたがお気に入りにした投稿 -----</p>
-      <% elsif @current_user.id != @user.id %>
-      <p>----- <%= "#{@user.name}" %>がお気入りした投稿 -----</p>
-      <% end %>
+    <% if @current_user.id == @user.id %>
+    <p>----- あなたがお気に入りにした投稿 -----</p>
+    <% elsif @current_user.id != @user.id %>
+    <p>----- <%= "#{@user.name}" %>がお気入りした投稿 -----</p>
+    <% end %>
     <% else %>
     <p>----- <%= "#{@user.name}" %>がお気入りした投稿 -----</p>
     <% end %>
-    <% @favorite_posts.each do |favorite_posts| %>
-      <%= image_tag "/user_image/#{favorite_posts.user.image}", :size =>'100x100'%>
-      <p><%= favorite_posts.user.name %></p>
-      <p><%= link_to favorite_posts.title, posts_path(favorite_posts.id) %></p>
-    <% end %>
+    
+    <div class="container container-div">
+      <div class="row">
+        <% @favorite_posts.each do |favorite_posts| %>
+        <div class="col-lg-4">
+          <div class="surround-div">
+            <div class="inner-div">
+              <div class="post-image-div">
+                <%= link_to image_tag("/post_image/#{favorite_posts.post_image}",class: "i"),post_path(favorite_posts.user.id) %>
+              </div>
+              <div class="post-userimage-name-div text-left">
+                <%= link_to image_tag("/user_image/#{favorite_posts.user.image}", :size =>'50x50'), "/users/#{favorite_posts.user.id}"%>
+                <%= link_to favorite_posts.user.name, user_path(favorite_posts.id) %>
+              </div>
+              <div class="post-title-create-div">
+                <%= link_to favorite_posts.title, post_path(favorite_posts.id) %>
+                <div class="post-create-div text-right">
+                  <%= favorite_posts.created_at.strftime("%Y-%m-%d %H:%M") %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div id="setting_delete_tab_link" class="tab-pane">
+    <div class="all-div container　no-gutters">
+      <div class="row">
+        <div class="left-div col-lg-6">
+          <% if !@current_user.nil? %>
+          <% if @current_user.id == @user.id || @current_user.admin? %>
+          <div class="setting-div">
+            <%= link_to "ユーザー情報を編集する", edit_user_path(@user.id) %>
+          </div>
+          <div class="delete-div">
+            <%= link_to "アカウントを削除する", user_path(@user.id), method: :delete, data: { confirm: '本当にアカウントを削除しますか？投稿内容など完全に消去されます' }%>
+          </div>
+          <% end %>
+          <% end %>
+        </div>
+        <div class="right-div col-lg-6"></div>  
+      </div>
+    </div>
   </div>
 </div>

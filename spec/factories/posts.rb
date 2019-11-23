@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   trait :empty do
-    user_id nil
     post_image nil
   end
+  
 end

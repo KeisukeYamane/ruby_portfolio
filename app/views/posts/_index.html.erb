@@ -5,10 +5,10 @@
       <div class="surround-div">
         <div class="inner-div">
           <div class="post-image-div">
-            <%= image_tag "/post_image/#{post.post_image}",class: "i"%>
+            <%= link_to image_tag("/post_image/#{post.post_image}",class: "i"),post_path(post.id) %>
           </div>
           <div class="post-userimage-name-div text-left">
-            <%= image_tag "/user_image/#{post.user.image}",  :size =>'50x50', class: "image_tag"%>
+            <%= link_to image_tag("/user_image/#{post.user.image}",  :size =>'50x50', class: "image_tag"), "/users/#{post.user.id}" %>
             <%= link_to post.user.name, "/users/#{post.user.id}"%>
           </div>
           <div class="post-title-create-div">

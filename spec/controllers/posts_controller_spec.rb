@@ -69,37 +69,135 @@ RSpec.describe PostsController, type: :controller do
   end
   
   describe "#create" do
+    before do
+      filepath = "spec/test_images/test.png"
+      @test_image_file = fixture_file_upload(filepath, "image/png")
+      @post = FactoryBot.attributes_for(:post, :empty)
+    end
     context "as an authenticated user" do
       before do
         @user = FactoryBot.create(:user)
-        @post = FactoryBot.attributes_for(:post, :empty)
         session[:user_id] = @user.id
-        @current_user = User.find(session[:user_id]) if session[:user_id]
-        # @post.user_id = @current_user.id
       end
-      
-      #session[:user_id]があれば投稿できること
+      #session[:user_id]があれば投稿でき、投稿一覧画面にリダイレクトされること
       it "adds a post" do
-        # binding.pry
         expect(
-          post :create, params: {post: @post}).to change(@user.posts, :count).by(1)
+          post :create, params: {post: @post, upfile: @test_image_file} ).to redirect_to "/posts/1/index"
         end
-      end
+    end
       
       context "as a guest" do
         #ログイン画面にリダイレクトすること
         it "redirect to login page" do
-          post_params = FactoryBot.attributes_for(:post)
-          post :create, params: {post: post_params}
+          post :create, params: {post: @post, upfile: @test_image_file}
           expect(response).to redirect_to "/login"
         end
         #302レスポンスを返すこと
         it "returns 302 responds" do
-          post_params = FactoryBot.attributes_for(:post)
-          post :create, params: {post: post_params}
+          post :create, params: {post: @post, upfile: @test_image_file}
           expect(response).to have_http_status(302)
         end
       end
     end
+
+    describe "#update" do
+    #認可されたユーザーとして
+      context "as an authorized user" do
+        before do
+          @post = FactoryBot.create(:post)
+          session[:user_id] = @post.user_id
+        end
+        #updateできること
+        it "update a post" do
+          post_params = FactoryBot.attributes_for(:post, :empty, title: "Good morning")
+          patch :update, params: {id: @post.id, post: post_params}
+          expect(@post.reload.title).to eq("Good morning")
+        end
+      end
+
+        #認可されていないユーザーとして
+        context "as an unauthorized user" do
+          before do
+            #assosiationでユーザーを2人作成、それぞれにpostを持たせるが、2人目のuserでログインをしている状態
+            @post = FactoryBot.create(:post)
+            @other_post = FactoryBot.create(:post, title: "Sorry")
+            session[:user_id] = @other_post.user_id
+          end
+          #2理目のユーザーが1人目のユーザーの投稿をupdateしようとするも、できない
+          it "dose not update a someone's post" do
+            post_params = FactoryBot.attributes_for(:post, :empty, title: "Hey!")
+            patch :update, params: {id: @post.id, post: post_params}
+            expect(@post.reload.title).to eq("Hello")
+          end
+
+          #投稿一覧画面にリダイレクトされる
+          it "redirecit to posts_page" do
+            post_params = FactoryBot.attributes_for(:post, :empty, title: "Hey!")
+            patch :update, params: {id: @post.id, post: post_params}
+            expect(response).to redirect_to "/posts/1/index"
+          end
+        end
+
+        #ログインを済ませていないゲストとして
+        context "as a guest" do
+          before do
+            @post = FactoryBot.create(:post)
+          end
+
+          #302レスポンスを返すこと
+          it "returns 302 responds" do
+            post_params = FactoryBot.attributes_for(:post, title: "Say")
+            patch :update, params: {id: @post.id, post: post_params}
+            expect(response).to have_http_status(302)
+          end
+
+          it "redirect to login page" do
+            post_params = FactoryBot.attributes_for(:post, title: "Say")
+            patch :update, params: {id: @post.id, post: post_params}
+            expect(response).to redirect_to("/login")
+          end
+        end
+
+        describe "#destroy" do
+          #認可されているユーザーとして
+          context "as an authorized user" do
+            before do
+              @post = FactoryBot.create(:post)
+              session[:user_id] = @post.user_id
+            end
+            #投稿を削除できる
+            it "deletes a post" do
+              expect{ delete :destroy, params: {id: @post.id}}.to change(@post.user.posts, :count).by(-1)
+            end
+          end
+          #認可されていないユーザーとして
+          context "as an unauthorized user" do
+            before do
+              @post = FactoryBot.create(:post)
+              @other_post = FactoryBot.create(:post)
+              session[:user_id] = @other_post.user_id
+            end
+            #投稿を削除できない
+            it "does not delete post" do
+              expect { delete :destroy, params: {id: @post.id}}.not_to change(@post.user.posts, :count)
+            end
+            #投稿一覧にリダイレクトされる
+            it "redirect to post_page" do
+              expect(delete :destroy, params: {id: @post.id}).to redirect_to "/posts/1/index"
+            end
+          end
+          context "as a guest" do
+            before do
+              @post = FactoryBot.create(:post)
+            end
+            it "returns 302 response" do
+              expect( delete :destroy, params: {id: @post.id}).to have_http_status(302)
+            end
+
+            it "refirect to login page" do
+              expect( delete :destroy, params: {id: @post.id}).to redirect_to "/login"
+            end
+          end
+        end
+    end
   end
-  

@@ -96,7 +96,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])#削除可
     # @post.title = params[:post][:title]
     # @post.content = params[:post][:content]
-    @post.update(post_params )
+    @post.update(post_params)
     upload_image
     if @post.save
       flash[:notice] = '投稿を編集しました'
@@ -136,6 +136,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :content, :post_image)
+    params.require(:post).permit(:title, :content, :upfile)
   end
 end
