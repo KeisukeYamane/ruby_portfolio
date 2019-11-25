@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       user_params
     )
     @user.image = 'default.png'
-
+    # binding.pry
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "登録完了しました"

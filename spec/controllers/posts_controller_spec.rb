@@ -1,17 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe PostsController, type: :controller do
+
+  describe "#index" do
+    #正常にレスポンスを返すこと
+    it "responds successfully" do
+      get :index
+      expect(response).to be_success
+    end
   
-  #正常にレスポンスを返すこと
-  it "#index responds successfully" do
-    get :index
-    expect(response).to be_success
-  end
-  
-  #200レスポンスを返すこと
-  it "#index returns 200 responds" do
-    get :index
-    expect(response).to have_http_status(200)
+    #200レスポンスを返すこと
+      it "returns 200 responds" do
+      get :index
+      expect(response).to have_http_status(200)
+    end
   end
   
   describe "#show" do
@@ -72,23 +74,35 @@ RSpec.describe PostsController, type: :controller do
     before do
       filepath = "spec/test_images/test.png"
       @test_image_file = fixture_file_upload(filepath, "image/png")
-      @post = FactoryBot.attributes_for(:post, :empty)
     end
     context "as an authenticated user" do
       before do
         @user = FactoryBot.create(:user)
-        session[:user_id] = @user.id
+        @post_and_user = FactoryBot.create(:post)
+        session[:user_id] = @post_and_user.user_id
       end
-      #session[:user_id]があれば投稿でき、投稿一覧画面にリダイレクトされること
-      it "adds a post" do
-        expect(
-          post :create, params: {post: @post, upfile: @test_image_file} ).to redirect_to "/posts/1/index"
-        end
+
+      context "with valid attributes" do
+          #session[:user_id]があれば投稿できること
+          it "adds a post" do
+           post_params = FactoryBot.attributes_for(:post)
+            expect{
+              post :create, params: {post: post_params, upfile: @test_image_file} }.to change(@post_and_user.user.posts, :count).by(1)
+          end
+      end
+
+       context "with invalid attributes" do
+          it "does not add a post" do
+            post_params = FactoryBot.attributes_for(:post, :invalid)
+            expect{
+              post :create, params: {post: post_params, upfile: @test_image_file} }.not_to change(@post_and_user.user.posts, :count)
+            end
+       end
     end
       
       context "as a guest" do
         #ログイン画面にリダイレクトすること
-        it "redirect to login page" do
+        it "redirects to login page" do
           post :create, params: {post: @post, upfile: @test_image_file}
           expect(response).to redirect_to "/login"
         end
@@ -108,7 +122,7 @@ RSpec.describe PostsController, type: :controller do
           session[:user_id] = @post.user_id
         end
         #updateできること
-        it "update a post" do
+        it "updates a post" do
           post_params = FactoryBot.attributes_for(:post, :empty, title: "Good morning")
           patch :update, params: {id: @post.id, post: post_params}
           expect(@post.reload.title).to eq("Good morning")
@@ -131,7 +145,7 @@ RSpec.describe PostsController, type: :controller do
           end
 
           #投稿一覧画面にリダイレクトされる
-          it "redirecit to posts_page" do
+          it "redirecits to posts_page" do
             post_params = FactoryBot.attributes_for(:post, :empty, title: "Hey!")
             patch :update, params: {id: @post.id, post: post_params}
             expect(response).to redirect_to "/posts/1/index"
@@ -151,7 +165,7 @@ RSpec.describe PostsController, type: :controller do
             expect(response).to have_http_status(302)
           end
 
-          it "redirect to login page" do
+          it "redirects to login page" do
             post_params = FactoryBot.attributes_for(:post, title: "Say")
             patch :update, params: {id: @post.id, post: post_params}
             expect(response).to redirect_to("/login")
@@ -182,7 +196,7 @@ RSpec.describe PostsController, type: :controller do
               expect { delete :destroy, params: {id: @post.id}}.not_to change(@post.user.posts, :count)
             end
             #投稿一覧にリダイレクトされる
-            it "redirect to post_page" do
+            it "redirects to post_page" do
               expect(delete :destroy, params: {id: @post.id}).to redirect_to "/posts/1/index"
             end
           end
@@ -194,7 +208,7 @@ RSpec.describe PostsController, type: :controller do
               expect( delete :destroy, params: {id: @post.id}).to have_http_status(302)
             end
 
-            it "refirect to login page" do
+            it "refirects to login page" do
               expect( delete :destroy, params: {id: @post.id}).to redirect_to "/login"
             end
           end

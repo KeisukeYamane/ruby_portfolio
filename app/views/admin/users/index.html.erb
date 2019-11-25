@@ -1,24 +1,31 @@
-<% @admin_post.each do |admin_post|%>
-<div class="">
-  <div class="">
-    <img src="<%= "/user_image/#{admin_post.user.image}"%>">
-  </div>
-  <div class="">
-    <div class="">
-      <%= admin_post.user.name %>
+<div class="container container-div">
+  <div class="row">
+    <% @admin_post.each do |admin_post|%>
+    <div class="col-lg-4">
+      <div class="surround-div">
+        <div class="inner-div">
+          <div class="post-image-div">
+            <%= link_to image_tag("/post_image/#{admin_post.post_image}",class: "i"), post_path(admin_post.id) %>
+          </div>
+          <div class="post-userimage-name-div text-left">
+            <%= link_to image_tag("/user_image/#{admin_post.user.image}",  :size =>'50x50', class: "image_tag"), "/users/#{admin_post.user.id}" %>
+            <%= link_to admin_post.user.name,"/users/#{admin_post.user.id}"%>
+          </div>
+          <div class="post-title-create-div">
+            <%= link_to admin_post.title, post_path(admin_post.id) %>
+            <div class="post-create-div text-right">
+              <% if !@current_user.nil? %>
+              <% if @current_user.admin? %>
+              <%= link_to "編集", edit_post_path(admin_post.id) %>
+              <%= link_to "削除", destroy_post_path(admin_post.id), method: :delete %>
+              <% end %>
+              <% end %>
+              <%= admin_post.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="">
-      <%= admin_post.title %>
-    </div>
-    <div class="">
-      <%= admin_post.content %>
-    </div>
-    <% if !@current_user.nil? %>
-      <% if @current_user.admin? %>
-        <%= link_to "編集", edit_post_path(admin_post.id) %>
-        <%= link_to "削除", destroy_post_path(admin_post.id), method: :delete %>
-      <% end %>
     <% end %>
   </div>
 </div>
-<% end %>

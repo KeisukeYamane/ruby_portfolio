@@ -15,9 +15,10 @@
 </ul>
 <div class="tab-content">
   <div id="post_tab_link" class="tab-pane active">
-    <%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%>
-    <h2><%= @user.name %></h2>
-    <p><%= @user.email %></p>
+    <div class="profile">
+      <div><%= image_tag "/user_image/#{@user.image}",  :size =>'100x100'%></div>
+      <div><p><%= @user.name %></p></div>
+    </div>
     <div class="container container-div">
       <div class="row">
         <% @user.posts.reverse_each do |post| %>

@@ -9,5 +9,9 @@ FactoryBot.define do
   trait :empty do
     post_image nil
   end
+
+  trait :invalid do
+    title nil
+  end
   
 end
