@@ -26,7 +26,7 @@
           <li class="list-inline-item list"><%= link_to '管理者からのお知らせ', notice_path %></li>
         <% end %>
         <% if session[:user_id] %>
-          <li class="list-inline-item list"><%= link_to '新規投稿', posts_new_path %></li>
+          <li class="list-inline-item list .new-post"><%= link_to '新規投稿', posts_new_path %></li>
           <li class="list-inline-item list"><%= link_to '投稿記事一覧', posts_page_index_path(@current_page) %></li>
           <li class="list-inline-item list"><%= link_to 'ユーザー一覧', users_path %></li>
           <li class="list-inline-item list"><%= link_to 'ログアウト', logout_path, method: :post %></li>
