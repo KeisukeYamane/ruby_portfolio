@@ -1,18 +1,28 @@
-<div class="">
-  <div class="">
-    <h1>投稿編集</h1>
-    <%= form_for(@post, html: {multipart: true}) do |f| %>
-    <div class="">
-      <div class="">
-        <% @post.errors.full_messages.each do |message| %>
-        <div class=""><%= message %></div>
-        <% end %>
-        <%= f.text_field :title %>
-        <%= f.text_area :content %>
-        <%= file_field_tag :upfile %>
-        <%= f.submit '投稿する' %>
+<div class="all-div container　no-gutters">
+  <div class="row">
+    <div class="left-div col-lg-12">
+      <div class="surround">
+        <div class="inner-surround">
+          <h2 class="new_post_tag">投稿編集</h2>
+          <% @post.errors.full_messages.each do |message| %>
+          <div class="">・<%= message %></div>
+          <% end %>
+          <%= form_for(@post, html: {multipart: true}) do |f| %>
+          <div class="email-div">
+            <%= f.text_field :title %>
+          </div>
+          <div class="content-div">
+            <%= f.text_area :content, :size => "42x10" %>
+          </div>
+          <div class="password-div">
+            <%= file_field_tag :upfile %>
+          </div>
+          <div class="submit-div post-tag">
+            <%= f.submit '投稿する' %>
+            <% end %>
+          </div>
+        </div>
       </div>
-    </div>
-    <% end %>
+    </div> 
   </div>
 </div>
