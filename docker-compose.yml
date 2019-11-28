@@ -2,6 +2,8 @@ version: '3'
 services:
   db:
     image: mysql:latest
+    volumes:
+      - ./mysql-confd:/etc/mysql/conf.d
     environment:
       MYSQL_DATABASE: good_development
       MYSQL_ROOT_PASSWORD: password
