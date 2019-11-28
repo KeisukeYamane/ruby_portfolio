@@ -1,26 +1,34 @@
-<div class="">
-  <div class="">
-    <div class="">ユーザーの編集</div>
-    <%= form_for(@user, url: user_path(@user), html: {multipart: true, method: :patch}) do |f| %>
-    <div class="">
-      <div class="">
-        <% @user.errors.full_messages.each do |message|%>
-        <div class=""><%= message %></div>
-        <% end %>
-        <p>ユーザー名</p>
-        <%= f.text_field :name %>
-        <p>メールアドレス</p>
-        <%= f.text_field :email %>
-        <p>パスワード</p>
-        <%= f.password_field :password %>
-        <p>パスワード再入力</p>
-          <%= f.password_field :password_confirmation%>
-        <p>プロフィール画像</p>
-        <!-- <input type="file" name="image" value=""> -->
-        <%= file_field_tag :upfile %>
-        <%= f.submit '編集する' %>
-      </div>
+<div class="all-div container　no-gutters">
+  <div class="row">
+    <div class="left-div col-lg-12">
+      <div class="surround">
+        <div class="inner-surround">
+          <h2 class="user-edit-tag">ユーザーの編集</h2>
+          <% @user.errors.full_messages.each do |message|%>
+          <div class="">・<%= message %></div>
+          <% end %>
+          <%= form_for(@user, url: user_path(@user), html: {multipart: true, method: :patch}) do |f| %>
+          <div class="name-div">
+            <%= f.text_field :name, placeholder: '名前' %>
+          </div>
+          <div class="email-div">
+            <%= f.text_field :email, placeholder: 'メールアドレス' %>
+          </div>
+          <div class="password-div">
+            <%= f.password_field :password, placeholder: 'パスワード' %>
+          </div>
+          <div class="password-div">
+            <%= f.password_field :password_confirmation, placeholder: 'パスワード再入力' %>
+          </div>
+          <div class="upfile-div">
+            <%= file_field_tag :upfile %>
+          </div>
+          <div class="edit-submit-div">
+            <%= f.submit '編集する' %>
+            <% end %>
+          </div>
+        </div>
+      </div> 
     </div>
-    <% end %>
   </div>
 </div>

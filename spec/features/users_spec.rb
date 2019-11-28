@@ -43,7 +43,7 @@ RSpec.feature "Users", type: :feature do
     expect(user.reload.name).to eq("michel")
   end
 
-  scenario "user can delete user's account", js: true do
+  scenario "user can delete user's account" do
     
     user = FactoryBot.create(:user)
     visit root_path
@@ -59,10 +59,6 @@ RSpec.feature "Users", type: :feature do
       expect(current_path).to eq user_path(id: user.id)
       click_link "設定/削除"
       click_on "アカウントを削除する"
-      # page.accept_confirm "本当にアカウントを削除しますか？投稿内容など完全に消去されます" do
-      #   click_link "OK"
-      # end
-      # page.driver.browser.switch_to.alert.accept
       expect(current_path).to eq posts_page_index_path(page: 1)
   }.to change(User, :count).by(-1)
   end

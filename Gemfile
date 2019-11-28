@@ -47,6 +47,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
+  gem 'webdrivers'
   gem 'selenium-webdriver'
   gem 'mysql2'
   # gem 'sqlite3'
