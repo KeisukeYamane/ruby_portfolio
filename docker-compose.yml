@@ -1,26 +1,39 @@
 version: '3'
 services:
-  db:
-    image: mysql:latest
-    volumes:
-      - ./mysql-confd:/etc/mysql/conf.d
-    environment:
-      MYSQL_DATABASE: good_development
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: keisuke
-      MYSQL_PASSWORD: password
-    ports:
-      - "3306:3306"
-  web:
+  app:
     build:
       context: .
-      dockerfile: Dockerfile
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    tty: true
-    stdin_open: true
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
+    env_file:
+      - ./environments/db.env
+    command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/portfolio
+      - public-data:/portfolio/public
+      - tmp-data:/portfolio/tmp
+      - log-data:/portfolio/log
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    env_file:
+      - ./environments/db.env
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./mysql-confd:/etc/mysql/conf.d
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/portfolio/public
+      - tmp-data:/portfolio/tmp
+    tty: true
+    stdin_open: true
+    ports:
+      - 80:80
+    depends_on:
+      - app
+volumes:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
