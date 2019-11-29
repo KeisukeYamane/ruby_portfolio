@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   attr_accessor :upfile
-  validates :title, presence: true, length: { maximum: 100}
-  validates :content, presence: true, length: {maximum: 300}
+  validates :title, presence: true, length: { maximum: 40}
+  validates :content, presence: true, length: {maximum: 250}
   validates :user_id, presence: true
   validates :post_image, presence: true
   belongs_to :user

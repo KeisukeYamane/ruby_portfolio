@@ -45,3 +45,15 @@ h1{
 .about-p {
   letter-spacing: 0.38em;
 }
+
+.outer-top {
+  background-image: url("/assets/door.jpg");
+  height: 700px;
+  background-position: center;
+  background-position-y: 1;
+}
+
+.outer-top h2 {
+  font-size: 70px;
+  padding-top: 280px;
+}

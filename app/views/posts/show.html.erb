@@ -9,17 +9,27 @@
         <p class="left-content text-left"><%= @post.content %></p>
         <% end %>
       </div>
-      <%= image_tag "/user_image/#{@user.image}", :size =>'50x50'%>
-      <%= link_to "#{@user.name}", user_path(@user) %>
-      
-      <% if !@current_user.nil? %>
-      <% if @post.user_id == @current_user.id || @current_user.admin? %>
-      <%= link_to "編集", edit_post_path(@post.id)%>
-      <%= link_to "削除", destroy_post_path(@post.id), method: :delete %>
-      <% end %>
-      <% end %>
-      <div id="likes_buttons_<%= @post.id %>">
-        <%= render partial: 'favorites/favorite', locals: {post: @post} %>
+      <div class="outer-destination-flex">
+        <div class="destination-flex">
+          <div class="user-image-and-name">
+            <%= image_tag "/user_image/#{@user.image}", :size =>'50x50'%>
+            <%= link_to "#{@user.name}", user_path(@user) %>
+          </div>
+          <div class="edit-delete-button d-flex align-items-center">
+            <% if !@current_user.nil? %>
+            <% if @post.user_id == @current_user.id || @current_user.admin? %>
+            <%= link_to "編集", edit_post_path(@post.id)%>
+            /
+            <%= link_to "削除", destroy_post_path(@post.id), method: :delete %>
+            <% end %>
+            <% end %>
+            <div class="">
+              <div id="likes_buttons_<%= @post.id %>" class="make-favorite">
+                <%= render partial: 'favorites/favorite', locals: {post: @post} %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
