@@ -13,9 +13,9 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  host: db
+  username: keisuke
+  password: password
 
 development:
   <<: *default
@@ -27,6 +27,10 @@ development:
 test:
   <<: *default
   database: good_test
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+  host: 
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,5 +54,5 @@ test:
 production:
   <<: *default
   database: good_production
-  username: portfolio
+  username: keisuke
   password: <%= ENV['PORTFOLIO_DATABASE_PASSWORD'] %>

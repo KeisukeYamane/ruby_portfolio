@@ -1,0 +1,42 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    env_file:
+      - ./environments/db.env
+    command: bundle exec puma -C config/puma.rb
+    volumes:
+      - .:/portfolio
+      - public-data:/portfolio/public
+      - tmp-data:/portfolio/tmp
+      - log-data:/portfolio/log
+    depends_on:
+      - db
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - ./environments/db.env
+    volumes:
+      - ./mysql-confd:/etc/mysql/conf.d
+      # - db-data:/var/lib/mysql
+    ports:
+      - '3306:3306'
+  web:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/portfolio/public
+      - tmp-data:/portfolio/tmp
+    tty: true
+    stdin_open: true
+    ports:
+      - 80:80
+    depends_on:
+      - app
+volumes:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
