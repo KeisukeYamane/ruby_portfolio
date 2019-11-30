@@ -195,3 +195,13 @@ input[type="submit"]:hover {
   font-weight: bold;
   margin-bottom: 0;
 }
+
+@media screen and (max-width: 991px){
+  .new-right-div {
+    display: none;
+  }
+
+  .right-div {
+    display: none;
+  }
+}

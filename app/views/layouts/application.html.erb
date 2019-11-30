@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Portfolio</title>
-    <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all' %>
-    <%= javascript_include_tag 'application' %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  </head>
+<head>
+  <title>Portfolio</title>
+  <%= csrf_meta_tags %>
+  
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
 
 <body>
   <header>
-   <div class="fix">
-    <div>
-      <nav class="align-middle app-title">
-        <%= link_to "Good", root_path, class: "" %>
+    <div class="fix">
+      <nav class="navbar navbar-expand-lg navbar-light">
+      <div>
+        <div class="align-middle app-title navbar-brand">
+          <%= link_to "Good", root_path, class: "" %>
+        </div>
+      </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <div class="d-flex align-items-center">
+              <ul class="list-inline menu-ul">
+                <% if session[:user_id] %>
+                <li class="list-inline-item list nav-item login-user">ログインしているユーザー【<%= link_to "#{@current_user.name}", user_path(@current_user) %>】</li>
+                <% end %>
+                <% unless @admin.nil? %>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to '管理者からのお知らせ', notice_path %></li>
+                <% end %>
+                <% if session[:user_id] %>
+                <li class="list-inline-item list .new-post nav-item nav-link"><%= link_to '新規投稿', posts_new_path %></li>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to '投稿記事一覧', posts_page_index_path(@current_page) %></li>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to 'ユーザー一覧', users_path %></li>
+                <li class="list-inline-item list nav-item nav-link logout text-center"><%= link_to 'ログアウト', logout_path, method: :post %></li>
+                <% else %>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to '投稿記事一覧', posts_page_index_path(@current_page) %></li>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to 'Goodについて', about_path %></li>
+                <li class="list-inline-item list nav-item nav-link"><%= link_to '新規登録', new_user_path %></li>
+                <li class="list-inline-item list nav-item nav-link login-li"><%= link_to 'ログイン', login_path %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
       </nav>
     </div>
-    <div class="d-flex align-items-center">
-      <ul class="list-inline">
-        <% if session[:user_id] %>
-          <li class="list-inline-item list">ログインしているユーザー【<%= link_to "#{@current_user.name}", user_path(@current_user) %>】</li>
-        <% end %>
-        <% unless @admin.nil? %>
-          <li class="list-inline-item list"><%= link_to '管理者からのお知らせ', notice_path %></li>
-        <% end %>
-        <% if session[:user_id] %>
-          <li class="list-inline-item list .new-post"><%= link_to '新規投稿', posts_new_path %></li>
-          <li class="list-inline-item list"><%= link_to '投稿記事一覧', posts_page_index_path(@current_page) %></li>
-          <li class="list-inline-item list"><%= link_to 'ユーザー一覧', users_path %></li>
-          <li class="list-inline-item list"><%= link_to 'ログアウト', logout_path, method: :post %></li>
-        <% else %>
-        <li class="list-inline-item list"><%= link_to '投稿記事一覧', posts_page_index_path(@current_page) %></li>
-          <li class="list-inline-item list"><%= link_to 'Goodについて', about_path %></li>
-          <li class="list-inline-item list"><%= link_to '新規登録', new_user_path %></li>
-          <li class="list-inline-item list"><%= link_to 'ログイン', login_path %></li>
-        <% end %>
-      </ul>
-    </div>
-   </div>
   </header>
-    <% if flash[:notice] %>
-      <div class="flash"><%= flash[:notice] %></div>
-    <% end %>
-    <%= yield %>
-  </body>
+  <% if flash[:notice] %>
+  <div class="flash"><%= flash[:notice] %></div>
+  <% end %>
+  <%= yield %>
+</body>
 </html>

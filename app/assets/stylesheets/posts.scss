@@ -139,10 +139,71 @@
   padding-right: 20px;
 }
 
+.user-image-and-name img {
+  border-radius: 50%;
+}
+
 .edit-delete-button {
   padding-right: 20px;
 }
 
 .make-favorite {
-  padding-left: 10px;
+  padding-left: 20px;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.collapse {
+  justify-content: flex-end;
+}
+
+@media screen and (max-width: 991px){
+  .container-div {
+    height: 1500px;
+  }
+  
+  .nav-link:not(.login-li){
+    text-align: left;
+  }
+
+  .show-post {
+    display: block;
+  }
+
+  .h2-title {
+    padding-top: 20px;
+  }
+
+  .right-letters {
+    display: inline-block;
+  }
+
+  .outer-destination-flex {
+    position: relative;
+  }
+
+  .destination-flex {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .right-letters::before {
+    display: none;
+  }
+
+  .su {
+    max-width: 450px;
+  }
+
+}
+
+@media screen and (min-width:992px) {
+  .i {
+    width: 250px;
+    height: 250px;
+    max-width: 250px;
+    max-height: 250px;
+  }
 }

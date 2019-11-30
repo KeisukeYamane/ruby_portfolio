@@ -22,7 +22,7 @@ RSpec.feature "Favorites", type: :feature do
     expect(current_path).to eq posts_page_index_path(page: 1)
     click_link "Hello"
     expect {
-      click_link "#text"
-    }.to change(User.posts.favorite, :count).by(1)
+      click_link "0"
+    }.to change(Favorite, :count).by(1)
   end
 end
