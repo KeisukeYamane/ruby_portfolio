@@ -111,6 +111,21 @@ input[type="submit"]:hover {
   background-position-y: -190px;
 }
 
+.user-edit-delete-image {
+  background-image: url("/assets/green_glass.jpg");
+  background-size: cover;
+  // background-position-y: -260px;
+  background-repeat: no-repeat;
+  transition: .6s;
+} 
+
+.user-edit-delete-image:hover {
+  background-image: url("/assets/green_door.jpg");
+  background-size: cover;
+  // background-position-y: -190px;
+  background-repeat: no-repeat;
+}
+
 .new-right-div {
   background-image: url("/assets/camera.jpg");
   background-size: cover;
