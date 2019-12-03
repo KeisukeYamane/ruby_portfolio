@@ -10,10 +10,10 @@ jobs:
           command: docker-compose build
       - run:
           name: docker-compose up
-          command: docker-compose up
+          command: docker-compose up -d
       - run:
           name: sleep for waiting db
-          command: sleep 1
+          command: sleep 25
       - run:
           name: set up db
           command: docker-compose run app rails db:create db:migrate
