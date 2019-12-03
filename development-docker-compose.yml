@@ -3,6 +3,7 @@ services:
   app:
     build:
       context: .
+      dockerfile: 'development-Dockerfile'
     env_file:
       - ./environments/db.env
     command: bundle exec puma -C config/puma.rb
@@ -54,3 +55,6 @@ volumes:
   tmp-data:
   log-data:
   db-data:
+
+# docker-compose -f development-docker-compose.yml build
+# docker-compose -f development-docker-compose.yml up -d
