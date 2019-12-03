@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Users", type: :feature do
+  include LoginSupport
   #ユーザーを作成できるかどうか
   scenario "user can create user's account" do
 
@@ -20,11 +21,7 @@ RSpec.feature "Users", type: :feature do
 
   scenario "user can edit user's account" do
     user = FactoryBot.create(:user)
-    visit root_path
-    click_link "ログイン"
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: user.password
-    click_button "ログイン"
+    log_in user
     expect(page).to have_content "ログイン完了しました"
     expect(current_path).to eq posts_page_index_path(page: 1)
 
@@ -46,11 +43,7 @@ RSpec.feature "Users", type: :feature do
   scenario "user can delete user's account" do
     
     user = FactoryBot.create(:user)
-    visit root_path
-    click_link "ログイン"
-    fill_in "メールアドレス", with: user.email
-    fill_in "パスワード", with: user.password
-    click_button "ログイン"
+    log_in user
     expect(page).to have_content "ログイン完了しました"
     expect(current_path).to eq posts_page_index_path(page: 1)
 
