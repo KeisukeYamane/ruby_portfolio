@@ -38,9 +38,7 @@ gem 'pry-byebug'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :production do
-  gem 'pg'
-end
+gem 'mysql2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -49,7 +47,6 @@ group :development, :test do
   gem 'capybara', '>= 2.15'
   gem 'webdrivers'
   gem 'selenium-webdriver'
-  gem 'mysql2'
   # gem 'sqlite3'
   gem 'rspec-rails', '~> 3.6.0'
   gem "factory_bot_rails", "~> 4.10.0"
