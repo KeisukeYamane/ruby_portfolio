@@ -4,14 +4,14 @@ services:
     build:
       context: .
       dockerfile: 'production-Dockerfile'
-    env_file:
-      - ./environments/db.env
     command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/portfolio
       - public-data:/portfolio/public
       - tmp-data:/portfolio/tmp
       - log-data:/portfolio/log
+    environment:
+      RAILS_ENV: production
   web:
     build:
       context: containers/nginx

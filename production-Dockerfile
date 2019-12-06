@@ -16,6 +16,8 @@ ADD Gemfile.lock /portfolio/Gemfile.lock
 
 RUN bundle install
 
+RUN bundle exec rails assets:precompile
+
 ADD . /portfolio
 
 RUN mkdir -p tmp/sockets
