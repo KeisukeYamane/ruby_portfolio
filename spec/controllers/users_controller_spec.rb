@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
+  let!(:user) { FactoryBot.create(:user) }
   describe "#index" do
     context "as an authenticated user" do
       before do

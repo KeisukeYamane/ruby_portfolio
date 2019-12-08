@@ -57,3 +57,4 @@ production:
   password:
   host:
   port:
+  socket:

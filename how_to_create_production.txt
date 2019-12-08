@@ -1,0 +1,46 @@
+EC2を建てたばかりである場合は①と②を行う
+EC2内でrubyやdocker,docker-compose,gitが扱える場合は、②を行う
+
+
+---①---
+以下の記事を参考に、rubyやdocker,docker-compose,gitが扱える環境を構築する。docker-composeをインストールする場面で、
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+とあるが、バージョンを指定する場合は、その中の、1.24.0の部分を変更すれば良い。今回は、1.24.1を使用している。
+
+https://qiita.com/at-946/items/1e8acea19cc0b9f31b98
+
+---②---
+・database.ymlファイルのproductionの設定
+production:
+  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  database:
+  username:
+  password:
+  host:
+  port:
+  socket:
+
+  RDSを用いる場合
+  databaseには、RDSで設定したデータベース名を記述する。
+  usernameには、RDSで設定したユーザーネーム名を記述する。
+  passwordにはRDSで設定したパスワードを記述する。
+  hostには、RDSにあるエンドポイントを記述する。
+  portにはRDSで示されているポート番号を記述する(ほとんどは3306番)
+  socketはmysql_config --socket で出力された値を記述する。今回は、
+  /var/lib/mysql/mysql.sock を記述した。
+
+・containers/nginx/nginx.confにserver_nameに、使用しているEC2のパブリックIPを記述する。この時、ES2にはElasticIPを割り当てている必要がある。その割り当てたIPを記述する。
+
+・config/puma.rbファイル内の、
+environment ENV.fetch("RAILS_ENV") { "development" }の部分を、
+environment ENV.fetch("RAILS_ENV") { "production" }に変更する。
+
+・シークレットキーを作成する。
+rails secret RAILS_ENV=production で生成された値をconfig/secret.ymlのproductionの部分に記述する。なおこの操作はコンテナ内で行う必要がある。コンテナ内に入るコマンドは
+docker exec -it コンテナ名 bash になる。
+
+最後に、docker-composeファイルはdevelopment用と、production用の2つのファイルがあるため、
+
+docker-compose -f production-docker-compose.yml run app rails db:migrateなどのように、docker-compose -f production-docker-compose.yml を先頭におく必要がある。
