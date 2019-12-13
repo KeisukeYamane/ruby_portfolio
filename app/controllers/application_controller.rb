@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def exist_admin_post
-    @admin = User.find_by(name: '管理者', email: 'admin@gmail.com', admin: true)
+    @admin = User.find_by(email: 'admin@example.com', admin: true)
   end
 
   def set_current_user

@@ -4,16 +4,18 @@ class PostsController < ApplicationController
 
   def index
       @current_page = params[:page].nil? ? 1 : params[:page].to_i
-      # @posts = Post.all.order(created_at: :desc)
       @max_page = (Post.all.size.to_f / 3).ceil
+      @posts = Post.all.order(created_at: :desc).limit(3).offset(3 * (@current_page -1))
+      @pagenation = {}
+
       if @max_page == 0
         @current_page = 1
       elsif @current_page > @max_page && @max_page != 0
         @current_page = @max_page
       end
-      @posts = Post.all.order(created_at: :desc).limit(3).offset(3 * (@current_page -1))
-      @pagenation = {}
+
       @pagenation['<<'] = 1 if @max_page >= 5 && @current_page >= 4
+
       if @max_page >= 4 && @current_page >= 3
         if @current_page == @max_page
           @pagenation['<'] = @current_page - 3
@@ -38,17 +40,14 @@ class PostsController < ApplicationController
       elsif (@current_page == 1 && @max_page == 2) || (@current_page != 1 && @max_page != @current_page)
         @pagenation.merge!({@current_page + 1 => @current_page + 1 })
       end
+
       if @max_page >= 4 && @current_page == 1
         @pagenation['>'] = @current_page + 3
       elsif (@max_page >= 4 && @current_page != 1 && @max_page - @current_page >= 2)
         @pagenation['>'] = @current_page + 2
       end
-      @pagenation['>>'] = @max_page if @max_page >= 5 && @max_page - @current_page >= 3
 
-    respond_to do |format|
-      format.html
-      format.js
-    end
+      @pagenation['>>'] = @max_page if @max_page >= 5 && @max_page - @current_page >= 3
 
   end
 
@@ -62,18 +61,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(
-      # title: params[:post][:title],
-      # content: params[:post][:content],
-      # post_image: params[:upfile]
-      #ここで紐付けを行う。
-      post_params
-      )
+    @post = Post.new(post_params)
       @post.user_id = @current_user.id
       #下で定義されている画像アップロード処理に移る
       upload_image 
       # @post.save
-      # これでデータベースに投稿内容が保存される
+      # データベースに投稿内容が保存される
       # そしてリダイレクト処理を行う
       if @post.save
       flash[:notice] = '投稿に成功しました'
@@ -88,14 +81,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])#削除可、limitation_corrct_userで定義されるから。
-
+    @post = Post.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])#削除可
-    # @post.title = params[:post][:title]
-    # @post.content = params[:post][:content]
+    @post = Post.find(params[:id])
     @post.update(post_params)
     upload_image
     if @post.save
@@ -107,7 +97,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])#削除可
+    @post = Post.find(params[:id])
     if @post.destroy
       flash[:notice] = '投稿を削除しました'
       redirect_to user_path(@post.user_id)

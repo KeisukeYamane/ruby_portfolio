@@ -1,8 +1,5 @@
 class Admin::UsersController < ApplicationController
-    # before_action :set_current_user
-  # before_action :check_admin_user
   before_action :exist_admin_post
-  # before_action :limitation_corrct_user
 
 
   def index

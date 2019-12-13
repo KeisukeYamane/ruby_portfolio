@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@media screen and (min-width: 320px){
+  .body {
+    padding: 0;
+  }
+}
 .no-gutters {
   margin:0;
   padding:0;
@@ -31,8 +36,19 @@ input[type="submit"] {
   box-shadow: 5px 10px 20px rgba(0,0,0,0.25);
 }
 
+
 input[type="submit"]:hover {
   box-shadow: none;
+}
+
+@media screen and (max-width: 425px){
+  input[type="text"], input[type="password"], input[type="submit"] {
+    width: 90%;
+  }
+  
+  input[type="submit"] {
+    width: 90%;
+  }
 }
 
 #post_content {
@@ -72,8 +88,10 @@ input[type="submit"]:hover {
   background: #f3f3f3;
 }
 
-.inner-surround {
-  width: 600px;
+@media screen and (min-width: 501px){
+  .inner-surround {
+    width: 600px;
+  }
 }
 
 .h2tag {
@@ -136,7 +154,46 @@ input[type="submit"]:hover {
 .new-right-div:hover {
   background-image: url("/assets/man_and_woman.jpg");
   background-size: cover;
-  background-position-y: -500px;
+  // background-position-y: -500px;
+}
+
+@media screen and (max-width: 1440px){
+  .new-right-div:hover {
+    background-size: 90%;
+  }
+
+  .new-right-div {
+    background-position-y: -280px;
+    transition: .6s;
+  }
+}
+
+@media screen and (max-width: 1120px){
+  .new-right-div:hover {
+    background-size: 120%;
+  }
+
+  .new-right-div {
+    background-position-y: -160px;
+    transition: .6s;
+  }
+}
+
+@media screen and (max-width: 1170px){
+  .new-right-div:hover {
+    background-size: 100%;
+  }
+}
+
+@media screen and (max-width: 1036px){
+  .new-right-div:hover {
+    background-size: 100%;
+  }
+
+  .new-right-div {
+    background-position-y: -140px;
+    transition: .6s;
+  }
 }
 
 .setting-div, .delete-div {
@@ -218,5 +275,25 @@ input[type="submit"]:hover {
 
   .right-div {
     display: none;
+  }
+}
+
+@media screen and (max-width: 375px){
+  .setting-div {
+    width: 300px;
+  }
+
+  .delete-div {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 1174px){
+  .right-div {
+    background-position-y: 0;
+  }
+
+  .right-div:hover {
+    background-position-y: 0;
   }
 }

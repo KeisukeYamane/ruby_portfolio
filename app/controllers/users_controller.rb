@@ -19,14 +19,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(
-      # name: params[:user][:name],
-      # email: params[:user][:email],
-      # password: params[:user][:password],
-      # password_confirmation: params[:user][:password_confirmation],
-      # image: 'default.png',
-      user_params
-    )
+    @user = User.new(user_params)
     @user.image = 'default.png'
     # binding.pry
     if @user.save
@@ -41,7 +34,6 @@ class UsersController < ApplicationController
   def show
       @user = User.find(params[:id])
       @favorite_posts = @user.favorite_posts
-
   end
 
   def edit
@@ -50,10 +42,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    # @user.name = params[:user][:name]
-    # @user.email = params[:user][:email]
-    # @user.password = params[:user][:password]
-    # @user.password_confirmation = params[:user][:password_confirmation]
     @user.update(user_params)
     if params[:upfile]
       file = params[:upfile]
@@ -86,10 +74,7 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user = User.find_by(
-      # email: params[:users][:email],
-      login_params
-    )
+    @user = User.find_by(login_params)
 
     if @user && @user.authenticate(password_params[:password])
       session[:user_id] = @user.id

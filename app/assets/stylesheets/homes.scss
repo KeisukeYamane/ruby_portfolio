@@ -34,11 +34,11 @@ h1{
   width: 100%;
 }
 
-.p-div {
-  width: 400px;
-  display: inline-block;
-  margin-top: 20px;
-}
+// .p-div {
+//   width: 400px;
+//   display: inline-block;
+//   margin-top: 20px;
+// }
 
 .about-p {
   letter-spacing: 0.38em;
@@ -54,4 +54,47 @@ h1{
 .outer-top h2 {
   font-size: 70px;
   padding-top: 280px;
+}
+
+@media screen and (max-width:580px) {
+  .outer-top h2 {
+    font-size: 50px;
+    padding-top: 280px;
+  }
+
+  .outer-top {
+    background-size: 90pc;
+  }
+}
+
+@media screen and (max-width:425px) {
+  .outer-top {
+    background-size: 80pc;
+  }
+}
+
+@media screen and (max-width:320px) {
+  .outer-top {
+    background-size: 55pc;
+  }
+}
+
+@media screen and (max-width:375px) {
+  .outer-top {
+    background-size: 70pc;
+  }
+}
+
+@media screen and (min-width:456px) {
+  .p-div {
+    width: 400px;
+    display: inline-block;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width:435px) {
+  .h2-tag {
+    margin-top: 0;
+  }
 }
