@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   root 'homes#top'
   get 'top' => 'homes#top'
   get 'about' => 'homes#about'
-  # get 'postall' => 'homes#all'
   get 'posts/new' => 'posts#new'
   post 'posts/create' => 'posts#create'
   get 'posts/:id/edit' => 'posts#edit', as: :edit_post
