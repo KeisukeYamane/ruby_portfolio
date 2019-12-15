@@ -11,12 +11,12 @@
 * インフラ: AWS(EC2、DBサーバーにRDSを使用)
 * circleciによる自動テスト  
   * 統合テスト/単体テストにはrspecを使用
-* 環境構築 : docker/docker-composeを使用  
+* 環境構築 : docker 19.03.5/docker-compose 1.24.1を使用  
   * 開発環境には、Nginx/Puma/Mysqlコンテナを使用  
   * 本番環境には、Nginx/Pumaコンテナを使用し、RDS内でMysqlを使用
 
 # 機能内容
-* gemを使わずにページネーション
+* gemを使用せずにページネーション
 	(この部分に関して記事を書いています)
  	<https://qiita.com/Keisuke8000/items/063eb10415be82c974a4>
 * ログイン機能
@@ -40,14 +40,58 @@
 * レスポンシブルデザイン
 
 
-# テストユーザー 
+### テストユーザー 
 ログイン画面に、下記と同じ内容が直接記載されています。 
 * (管理者) メールアドレス: admin@example.com パスワード: 1234  
 * (一般ユーザー) メールアドレス: user@example.com パスワード: 1111
 
-# Setup
+# Usage
+(1)dockerおよびdocker-composeが使用できる環境が必要になります。下記のURLから、Docker for Macをインストールしてください。  
+<https://store.docker.com/editions/community/docker-ce-desktop-mac>  
 
-〜
+(2)任意のディレクトリを作成し、そのディレクトリに移動してください。
+~~~
+$ cd Desktop
+Desktop$ mkdir work
+Desktop$ cd work
+~~~
+(3)そのディレクトリ内でgit cloneを行います。
+~~~
+work$ git clone https://github.com/KeisukeYamane/ruby_portfolio
+~~~
+(4)直下にruby_portfolioというディレクトリが作られるので、そのディレクトリに移動してください。
+~~~
+work$ cd ruby_portfolio
+~~~
+(5)developmentかproductionによって使用するDockerfileおよび、docker-compose.ymlは異なります。ですので、開発環境の場合は以下のコマンドをターミナル上で打ってください。(多少時間がかかります。)
+~~~
+ruby_portfolio$ docker-compose -f development-docker-compose.yml build
+~~~
+(6)そうすると、必要なimageがそれぞれインストールされるので、コンテナを立ち上げます。(多少時間がかかります。)
+~~~
+ruby_portfolio$ docker-compose -f development-docker-compose.yml up -d
+~~~
+(7)コンテナ内に入ります。
+~~~
+ruby_portfolio$ docker exec -it ruby_portfolio_app_1 bash
+root@fa2a8b40fedd:/portfolio# 
+~~~
+(8)データベースを作成し、マイグレーションを行います。またseedsファイルには初期データが書かれています。
+~~~
+root@fa2a8b40fedd:/portfolio# rails db:create
+root@fa2a8b40fedd:/portfolio# rails db:migrate
+root@fa2a8b40fedd:/portfolio# rails db:seed
+~~~
+(10)localhost:80 で開発環境に入ることができます。  
+(11)コンテナ内から抜ける場合
+~~~
+root@fa2a8b40fedd:/portfolio# exit
+ruby_portfolio$
+~~~ 
+(12)コンテナの停止、削除する場合
+~~~
+ruby_portfolio$ docker-compose -f development-docker-compose.yml down
+~~~
 # 製作者
 Keisuke Yamane
 

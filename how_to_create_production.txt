@@ -38,7 +38,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }の部分を、
 environment ENV.fetch("RAILS_ENV") { "production" }に変更する。
 
 ・シークレットキーを作成する。
-rails secret RAILS_ENV=production で生成された値をconfig/secret.ymlのproductionの部分に記述する。なおこの操作はコンテナ内で行う必要がある。コンテナ内に入るコマンドは
+rails secret RAILS_ENV=production で生成された値をconfig/secrets.ymlのproductionの部分に記述する。なおこの操作はコンテナ内で行う必要がある。コンテナ内に入るコマンドは
 docker exec -it コンテナ名 bash になる。
 
 最後に、docker-composeファイルはdevelopment用と、production用の2つのファイルがあるため、
