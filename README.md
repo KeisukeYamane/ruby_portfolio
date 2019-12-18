@@ -1,7 +1,8 @@
 # コンセプト
 「買って良かったと思える物」を共有する投稿サイトです。  
-* http://18.177.159.244/
+* <http://18.177.159.244/>  
 <img width="1439" alt="sample" src="https://user-images.githubusercontent.com/56299538/70850293-04264500-1ecc-11ea-9622-ea4b7d289810.png">
+
 # 技術内容
 * 言語：ruby 2.5.1
 * フレームワーク：Ruby on Rails 5.1.7
@@ -95,6 +96,3 @@ ruby_portfolio$ docker-compose -f development-docker-compose.yml down
 ~~~
 # 製作者
 Keisuke Yamane
-
-
-
