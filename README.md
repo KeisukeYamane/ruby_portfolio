@@ -14,8 +14,8 @@
 * circleciによる自動テスト  
   * 統合テスト/単体テストにはrspecを使用
 * 環境構築 : docker 19.03.5/docker-compose 1.24.1を使用  
-  * 開発環境には、Nginx/Puma/Mysqlコンテナを使用  
-  * 本番環境には、Nginx/Pumaコンテナを使用し、RDS内でMysqlを使用
+  * 開発環境には、Nginx/Puma/Mysqlを使用  
+  * 本番環境には、Nginx/Pumaを使用し、RDS内でMysqlを使用
 
 # 機能内容
 * gemを使用せずにページネーション
